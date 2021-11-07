@@ -15,8 +15,7 @@ function myfunc() {
 
 	// Checking if Player X won or not and after
 	// that disabled all the other fields
-	if ((b1 == 'x' || b1 == 'X') && (b2 == 'x' ||
-		b2 == 'X') && (b3 == 'x' || b3 == 'X')) {
+	if ((b1 == 'x') && (b2 == 'x') && (b3 == 'x')) {
 		document.getElementById('print')
 			.innerHTML = "Player X won";
 		document.getElementById("b4").disabled = true;
@@ -25,7 +24,9 @@ function myfunc() {
 		document.getElementById("b7").disabled = true;
 		document.getElementById("b8").disabled = true;
 		document.getElementById("b9").disabled = true;
-		window.alert('Player X won');
+setTimeout(()=>{
+			window.alert('Player X won');
+		},100)
 	}
 	else if ((b1 == 'x' || b1 == 'X') && (b4 == 'x' ||
 		b4 == 'X') && (b7 == 'x' || b7 == 'X')) {
@@ -38,7 +39,9 @@ function myfunc() {
 		document.getElementById("b8").disabled = true;
 		document.getElementById("b9").disabled = true;
 
-		window.alert('Player X won');
+		setTimeout(()=>{
+			window.alert('Player X won');
+		},100)
 	}
 	else if ((b7 == 'x' || b7 == 'X') && (b8 == 'x' ||
 		b8 == 'X') && (b9 == 'x' || b9 == 'X')) {
@@ -50,7 +53,9 @@ function myfunc() {
 		document.getElementById("b4").disabled = true;
 		document.getElementById("b5").disabled = true;
 		document.getElementById("b6").disabled = true;
-		window.alert('Player X won');
+		setTimeout(()=>{
+			window.alert('Player X won');
+		},100)
 	}
 	else if ((b3 == 'x' || b3 == 'X') && (b6 == 'x' ||
 		b6 == 'X') && (b9 == 'x' || b9 == 'X')) {
@@ -62,7 +67,9 @@ function myfunc() {
 		document.getElementById("b5").disabled = true;
 		document.getElementById("b7").disabled = true;
 		document.getElementById("b8").disabled = true;
-		window.alert('Player X won');
+		setTimeout(()=>{
+			window.alert('Player X won');
+		},100)
 	}
 	else if ((b1 == 'x' || b1 == 'X') && (b5 == 'x' ||
 		b5 == 'X') && (b9 == 'x' || b9 == 'X')) {
@@ -74,7 +81,9 @@ function myfunc() {
 		document.getElementById("b6").disabled = true;
 		document.getElementById("b7").disabled = true;
 		document.getElementById("b8").disabled = true;
-		window.alert('Player X won');
+		setTimeout(()=>{
+			window.alert('Player X won');
+		},100)
 	}
 	else if ((b3 == 'x' || b3 == 'X') && (b5 == 'x' ||
 		b5 == 'X') && (b7 == 'x' || b7 == 'X')) {
@@ -86,7 +95,9 @@ function myfunc() {
 		document.getElementById("b6").disabled = true;
 		document.getElementById("b8").disabled = true;
 		document.getElementById("b9").disabled = true;
-		window.alert('Player X won');
+		setTimeout(()=>{
+			window.alert('Player X won');
+		},100)
 	}
 	else if ((b2 == 'x' || b2 == 'X') && (b5 == 'x' ||
 		b5 == 'X') && (b8 == 'x' || b8 == 'X')) {
@@ -98,7 +109,9 @@ function myfunc() {
 		document.getElementById("b6").disabled = true;
 		document.getElementById("b7").disabled = true;
 		document.getElementById("b9").disabled = true;
-		window.alert('Player X won');
+		setTimeout(()=>{
+			window.alert('Player X won');
+		},100)
 	}
 	else if ((b4 == 'x' || b4 == 'X') && (b5 == 'x' ||
 		b5 == 'X') && (b6 == 'x' || b6 == 'X')) {
@@ -110,7 +123,9 @@ function myfunc() {
 		document.getElementById("b7").disabled = true;
 		document.getElementById("b8").disabled = true;
 		document.getElementById("b9").disabled = true;
-		window.alert('Player X won');
+		setTimeout(()=>{
+			window.alert('Player X won');
+		},100)
 	}
 
 	// Checking of Player X finsh
@@ -126,7 +141,9 @@ function myfunc() {
 		document.getElementById("b7").disabled = true;
 		document.getElementById("b8").disabled = true;
 		document.getElementById("b9").disabled = true;
-		window.alert('Player 0 won');
+		setTimeout(()=>{
+			window.alert('Player 0 won');
+		},100)
 	}
 	else if ((b1 == '0' || b1 == '0') && (b4 == '0' ||
 		b4 == '0') && (b7 == '0' || b7 == '0')) {
@@ -138,7 +155,9 @@ function myfunc() {
 		document.getElementById("b6").disabled = true;
 		document.getElementById("b8").disabled = true;
 		document.getElementById("b9").disabled = true;
-		window.alert('Player 0 won');
+		setTimeout(()=>{
+			window.alert('Player 0 won');
+		},100)
 	}
 	else if ((b7 == '0' || b7 == '0') && (b8 == '0' ||
 		b8 == '0') && (b9 == '0' || b9 == '0')) {
@@ -150,7 +169,9 @@ function myfunc() {
 		document.getElementById("b4").disabled = true;
 		document.getElementById("b5").disabled = true;
 		document.getElementById("b6").disabled = true;
-		window.alert('Player 0 won');
+		setTimeout(()=>{
+			window.alert('Player 0 won');
+		},100)
 	}
 	else if ((b3 == '0' || b3 == '0') && (b6 == '0' ||
 		b6 == '0') && (b9 == '0' || b9 == '0')) {
@@ -162,7 +183,9 @@ function myfunc() {
 		document.getElementById("b5").disabled = true;
 		document.getElementById("b7").disabled = true;
 		document.getElementById("b8").disabled = true;
-		window.alert('Player 0 won');
+		setTimeout(()=>{
+			window.alert('Player 0 won');
+		},100)
 	}
 	else if ((b1 == '0' || b1 == '0') && (b5 == '0' ||
 		b5 == '0') && (b9 == '0' || b9 == '0')) {
@@ -174,7 +197,9 @@ function myfunc() {
 		document.getElementById("b6").disabled = true;
 		document.getElementById("b7").disabled = true;
 		document.getElementById("b8").disabled = true;
-		window.alert('Player 0 won');
+		setTimeout(()=>{
+			window.alert('Player 0 won');
+		},100)
 	}
 	else if ((b3 == '0' || b3 == '0') && (b5 == '0' ||
 		b5 == '0') && (b7 == '0' || b7 == '0')) {
@@ -186,7 +211,9 @@ function myfunc() {
 		document.getElementById("b6").disabled = true;
 		document.getElementById("b8").disabled = true;
 		document.getElementById("b9").disabled = true;
-		window.alert('Player 0 won');
+		setTimeout(()=>{
+			window.alert('Player 0 won');
+		},100)
 	}
 	else if ((b2 == '0') && (b5 == '0') && (b8 == '0')) {
 		document.getElementById('print')
@@ -212,7 +239,9 @@ function myfunc() {
 		document.getElementById("b7").disabled = true;
 		document.getElementById("b8").disabled = true;
 		document.getElementById("b9").disabled = true;
-		window.alert('Player 0 won');
+		setTimeout(()=>{
+			window.alert('Player 0 won');
+		},100)
 	}
 
 	// Checking of Player 0 finsh
@@ -225,7 +254,9 @@ function myfunc() {
 		b8 == '0') && (b9 == 'X' || b9 == '0')) {
 			document.getElementById('print')
 				.innerHTML = "Match Tie";
-			window.alert('Match Tie');
+				setTimeout(()=>{
+					window.alert('Match Tie');
+				},100)
 	}
 	else {
 
