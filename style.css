@@ -18,6 +18,11 @@ body {
     max-width: 600px;
 }
 
+.keyword-input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 #results {
     margin-top: 20px;
     text-align: left;
