@@ -89,3 +89,9 @@ dropArea.addEventListener('drop', (event) => {
     const files = event.dataTransfer.files;
     handleFiles(files);
 });
+
+keywordInput.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        handleFiles(fileInput.files);
+    }
+});

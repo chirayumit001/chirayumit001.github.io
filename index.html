@@ -3,22 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Keyword Search</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Home - PDF Keyword Search</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>PDF Keyword Search</h1>
-        <input type="file" id="fileInput" webkitdirectory directory multiple accept=".pdf">
-        <div id="dropArea">Drag & Drop folder here</div>
-        <input type="text" id="keywordInput" placeholder="Enter keywords, separated by commas">
-        <button id="runButton">Run</button>
-        <div id="results"></div>
+    <div class="home-container">
+        <div class="circle-button" onclick="window.location.href='upload.html'">
+            Start Search
+        </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
-    <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.worker.min.js';
-    </script>
-    <script src="script.js"></script>
 </body>
 </html>
