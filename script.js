@@ -1,11 +1,14 @@
 const fileInput = document.getElementById('fileInput');
 const dropArea = document.getElementById('dropArea');
-const runButton = document.getElementById('runButton');
+const anyRunButton = document.getElementById('anyRunButton');
+const allRunButton = document.getElementById('allRunButton');
 const resultsDiv = document.getElementById('results');
-const keywordInput = document.getElementById('keywordInput');
+const anyKeywordInput = document.getElementById('anyKeywordInput');
+const allKeywordInput = document.getElementById('allKeywordInput');
 
-function handleFiles(files) {
-    const keywords = keywordInput.value.toLowerCase().split(',').map(kw => kw.trim());
+function handleFiles(files, mode) {
+    const anyKeywords = anyKeywordInput.value.toLowerCase().split(',').map(kw => kw.trim());
+    const allKeywords = allKeywordInput.value.toLowerCase().split(',').map(kw => kw.trim());
     const papers_path = new Set();
 
     if (files.length === 0) {
@@ -13,6 +16,7 @@ function handleFiles(files) {
         return;
     }
 
+    const keywords = mode === 'any' ? anyKeywords : allKeywords;
     if (keywords.length === 0 || keywords[0] === '') {
         alert('Please enter at least one keyword.');
         return;
@@ -32,9 +36,16 @@ function handleFiles(files) {
                     const textContent = await page.getTextContent();
                     const text = textContent.items.map(item => item.str).join(' ').toLowerCase();
 
-                    if (keywords.some(keyword => text.includes(keyword))) {
+                    let matchFound = false;
+                    if (mode === 'any') {
+                        matchFound = keywords.some(keyword => text.includes(keyword));
+                    } else if (mode === 'all') {
+                        matchFound = keywords.every(keyword => text.includes(keyword));
+                    }
+
+                    if (matchFound) {
                         papers_path.add(file);
-                        break; // Move to the next file if any keyword is found
+                        break; // Move to the next file if any/all keywords are found
                     }
                 }
 
@@ -70,8 +81,12 @@ fileInput.addEventListener('change', (event) => {
     handleFiles(event.target.files);
 });
 
-runButton.addEventListener('click', () => {
-    handleFiles(fileInput.files);
+anyRunButton.addEventListener('click', () => {
+    handleFiles(fileInput.files, 'any');
+});
+
+allRunButton.addEventListener('click', () => {
+    handleFiles(fileInput.files, 'all');
 });
 
 dropArea.addEventListener('dragover', (event) => {
