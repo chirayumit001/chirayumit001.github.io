@@ -33,7 +33,7 @@ function handleFiles(files) {
                     const text = textContent.items.map(item => item.str).join(' ').toLowerCase();
 
                     if (keywords.some(keyword => text.includes(keyword))) {
-                        papers_path.add(file.name);
+                        papers_path.add(file);
                         break; // Move to the next file if any keyword is found
                     }
                 }
@@ -56,7 +56,11 @@ function updateResults(papers_path) {
     } else {
         papers_path.forEach(file => {
             const p = document.createElement('p');
-            p.textContent = file;
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(file);
+            a.textContent = file.name;
+            a.target = '_blank'; // Open in a new tab
+            p.appendChild(a);
             resultsDiv.appendChild(p);
         });
     }
