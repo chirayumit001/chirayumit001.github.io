@@ -11,8 +11,17 @@
         <h1>PDF Keyword Search</h1>
         <input type="file" id="fileInput" webkitdirectory directory multiple accept=".pdf">
         <div id="dropArea">Drag & Drop folder here</div>
-        <input type="text" id="keywordInput" placeholder="Enter keywords, separated by commas">
-        <button id="runButton">Run</button>
+
+        <div class="keyword-input">
+            <input type="text" id="anyKeywordInput" placeholder="Enter keywords (any), separated by commas">
+            <button id="anyRunButton">Run (Any Keyword)</button>
+        </div>
+
+        <div class="keyword-input">
+            <input type="text" id="allKeywordInput" placeholder="Enter keywords (all), separated by commas">
+            <button id="allRunButton">Run (All Keywords)</button>
+        </div>
+
         <div id="results"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
