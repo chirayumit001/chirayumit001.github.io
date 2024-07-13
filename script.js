@@ -15,6 +15,11 @@ async function handleFiles(files) {
         return;
     }
 
+    if (files.length > 150) {
+        alert('Please upload a maximum of 150 files at a time.');
+        return;
+    }
+
     if (keywords.length === 0 || keywords[0] === '') {
         alert('Please enter at least one keyword.');
         return;
@@ -30,7 +35,7 @@ async function handleFiles(files) {
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
         if (file.type === 'application/pdf') {
-            await processFile(file, keywords, papers_path);
+            const foundAllKeywords = await processFile(file, keywords, papers_path);
             processedFiles++;
             const progress = (processedFiles / totalFiles) * 100;
             progressBar.style.width = `${progress}%`;
@@ -39,6 +44,10 @@ async function handleFiles(files) {
             // Force garbage collection (if supported)
             if (window.gc) {
                 window.gc();
+            }
+
+            if (foundAllKeywords) {
+                addResult(file); // Add result dynamically
             }
         } else {
             alert('Please ensure the folder contains only PDF files.');
@@ -49,7 +58,7 @@ async function handleFiles(files) {
     loader.classList.add('hidden'); // Hide loader when done
 
     if (papers_path.size === 0) {
-        resultsDiv.innerHTML = 'No documents contain the specified keywords.';
+        resultsDiv.innerHTML = 'No documents contain all the specified keywords.';
     }
 }
 
@@ -60,18 +69,23 @@ async function processFile(file, keywords, papers_path) {
             const typedarray = new Uint8Array(this.result);
 
             const pdf = await pdfjsLib.getDocument(typedarray).promise;
+            let foundAllKeywords = true;
+
             for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
                 const page = await pdf.getPage(pageNum);
                 const textContent = await page.getTextContent();
                 const text = textContent.items.map(item => item.str).join(' ').toLowerCase();
 
-                if (keywords.some(keyword => text.includes(keyword))) {
-                    papers_path.add(file);
-                    addResult(file); // Add result dynamically
-                    break; // Move to the next file if any keyword is found
+                if (!keywords.every(keyword => text.includes(keyword))) {
+                    foundAllKeywords = false;
+                    break;
                 }
             }
-            resolve();
+
+            if (foundAllKeywords) {
+                papers_path.add(file);
+            }
+            resolve(foundAllKeywords);
         };
         fileReader.readAsArrayBuffer(file);
     });
@@ -88,11 +102,21 @@ function addResult(file) {
 }
 
 fileInput.addEventListener('change', (event) => {
-    handleFiles(event.target.files);
+    if (event.target.files.length > 150) {
+        alert('Please upload a maximum of 150 files at a time.');
+        fileInput.value = ''; // Clear input field
+    } else {
+        handleFiles(event.target.files);
+    }
 });
 
 runButton.addEventListener('click', () => {
-    handleFiles(fileInput.files);
+    if (fileInput.files.length > 150) {
+        alert('Please upload a maximum of 150 files at a time.');
+        fileInput.value = ''; // Clear input field
+    } else {
+        handleFiles(fileInput.files);
+    }
 });
 
 dropArea.addEventListener('dragover', (event) => {
@@ -108,11 +132,20 @@ dropArea.addEventListener('drop', (event) => {
     event.preventDefault();
     dropArea.classList.remove('hover');
     const files = event.dataTransfer.files;
-    handleFiles(files);
+    if (files.length > 150) {
+        alert('Please upload a maximum of 150 files at a time.');
+    } else {
+        handleFiles(files);
+    }
 });
 
 keywordInput.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
-        handleFiles(fileInput.files);
+        if (fileInput.files.length > 150) {
+            alert('Please upload a maximum of 150 files at a time.');
+            fileInput.value = ''; // Clear input field
+        } else {
+            handleFiles(fileInput.files);
+        }
     }
 });
