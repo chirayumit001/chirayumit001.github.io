@@ -3,18 +3,14 @@ const dropArea = document.getElementById('dropArea');
 const runButton = document.getElementById('runButton');
 const resultsDiv = document.getElementById('results');
 const keywordInput = document.getElementById('keywordInput');
+const loader = document.getElementById('loader');
 const progressBar = document.getElementById('progressBar');
 
-const BATCH_SIZE = 100; // Number of files to process in each batch
-
-function handleFiles(files) {
+async function handleFiles(files) {
     const keywords = keywordInput.value.toLowerCase().split(',').map(kw => kw.trim());
     const papers_path = new Set();
-    const totalFiles = files.length;
-    let currentIndex = 0;
-    let processedFiles = 0;
 
-    if (totalFiles === 0) {
+    if (files.length === 0) {
         alert('Please select a folder containing PDF files.');
         return;
     }
@@ -24,55 +20,46 @@ function handleFiles(files) {
         return;
     }
 
-    resultsDiv.innerHTML = 'Searching...';
-    progressBar.value = 0;
-    progressBar.max = totalFiles;
+    resultsDiv.innerHTML = '';
+    loader.classList.remove('hidden'); // Show loader
+    progressBar.style.width = '0%'; // Reset progress bar
 
-    function processBatch() {
-        const batchFiles = Array.from(files).slice(currentIndex, currentIndex + BATCH_SIZE);
-        let processedCount = 0;
+    const totalFiles = files.length;
+    let processedFiles = 0;
 
-        for (const file of batchFiles) {
-            if (file.type === 'application/pdf') {
-                const fileReader = new FileReader();
-                fileReader.onload = async function() {
-                    const typedarray = new Uint8Array(this.result);
-                    const pdf = await pdfjsLib.getDocument(typedarray).promise;
+    for (const file of files) {
+        if (file.type === 'application/pdf') {
+            const fileReader = new FileReader();
+            fileReader.onload = async function() {
+                const typedarray = new Uint8Array(this.result);
 
-                    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-                        const page = await pdf.getPage(pageNum);
-                        const textContent = await page.getTextContent();
-                        const text = textContent.items.map(item => item.str).join(' ').toLowerCase();
+                const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const textContent = await page.getTextContent();
+                    const text = textContent.items.map(item => item.str).join(' ').toLowerCase();
 
-                        if (keywords.some(keyword => text.includes(keyword))) {
-                            papers_path.add(file);
-                            break; // Move to the next file if any keyword is found
-                        }
+                    if (keywords.some(keyword => text.includes(keyword))) {
+                        papers_path.add(file);
+                        break; // Move to the next file if any keyword is found
                     }
+                }
 
-                    processedCount++;
-                    processedFiles++;
-                    progressBar.value = processedFiles;
+                processedFiles++;
+                const progressPercentage = (processedFiles / totalFiles) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
 
-                    if (processedCount === batchFiles.length) {
-                        currentIndex += BATCH_SIZE;
-                        updateResults(papers_path);
-                        if (currentIndex < totalFiles) {
-                            processBatch(); // Process next batch
-                        } else {
-                            resultsDiv.innerHTML = 'Search complete.';
-                        }
-                    }
-                };
-                fileReader.readAsArrayBuffer(file);
-            } else {
-                alert('Please ensure the folder contains only PDF files.');
-                return;
-            }
+                if (processedFiles === totalFiles) {
+                    loader.classList.add('hidden'); // Hide loader when done
+                    updateResults(papers_path);
+                }
+            };
+            fileReader.readAsArrayBuffer(file);
+        } else {
+            alert('Please ensure the folder contains only PDF files.');
+            return;
         }
     }
-
-    processBatch();
 }
 
 function updateResults(papers_path) {
