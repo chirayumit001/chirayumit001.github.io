@@ -27,57 +27,64 @@ async function handleFiles(files) {
     const totalFiles = files.length;
     let processedFiles = 0;
 
-    for (const file of files) {
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
         if (file.type === 'application/pdf') {
-            const fileReader = new FileReader();
-            fileReader.onload = async function() {
-                const typedarray = new Uint8Array(this.result);
+            await processFile(file, keywords, papers_path);
+            processedFiles++;
+            const progress = (processedFiles / totalFiles) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${Math.round(progress)}%`; // Update progress text
 
-                const pdf = await pdfjsLib.getDocument(typedarray).promise;
-                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-                    const page = await pdf.getPage(pageNum);
-                    const textContent = await page.getTextContent();
-                    const text = textContent.items.map(item => item.str).join(' ').toLowerCase();
-
-                    if (keywords.some(keyword => text.includes(keyword))) {
-                        papers_path.add(file);
-                        break; // Move to the next file if any keyword is found
-                    }
-                }
-
-                processedFiles++;
-                const progressPercentage = (processedFiles / totalFiles) * 100;
-                progressBar.style.width = `${progressPercentage}%`;
-
-                if (processedFiles === totalFiles) {
-                    loader.classList.add('hidden'); // Hide loader when done
-                    updateResults(papers_path);
-                }
-            };
-            fileReader.readAsArrayBuffer(file);
+            // Force garbage collection (if supported)
+            if (window.gc) {
+                window.gc();
+            }
         } else {
             alert('Please ensure the folder contains only PDF files.');
             return;
         }
     }
-}
 
-function updateResults(papers_path) {
-    resultsDiv.innerHTML = '';
+    loader.classList.add('hidden'); // Hide loader when done
 
     if (papers_path.size === 0) {
         resultsDiv.innerHTML = 'No documents contain the specified keywords.';
-    } else {
-        papers_path.forEach(file => {
-            const p = document.createElement('p');
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(file);
-            a.textContent = file.name;
-            a.target = '_blank'; // Open in a new tab
-            p.appendChild(a);
-            resultsDiv.appendChild(p);
-        });
     }
+}
+
+async function processFile(file, keywords, papers_path) {
+    return new Promise((resolve) => {
+        const fileReader = new FileReader();
+        fileReader.onload = async function () {
+            const typedarray = new Uint8Array(this.result);
+
+            const pdf = await pdfjsLib.getDocument(typedarray).promise;
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const page = await pdf.getPage(pageNum);
+                const textContent = await page.getTextContent();
+                const text = textContent.items.map(item => item.str).join(' ').toLowerCase();
+
+                if (keywords.some(keyword => text.includes(keyword))) {
+                    papers_path.add(file);
+                    addResult(file); // Add result dynamically
+                    break; // Move to the next file if any keyword is found
+                }
+            }
+            resolve();
+        };
+        fileReader.readAsArrayBuffer(file);
+    });
+}
+
+function addResult(file) {
+    const p = document.createElement('p');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(file);
+    a.textContent = `${file.name}`;
+    a.target = '_blank'; // Open in a new tab
+    p.appendChild(a);
+    resultsDiv.appendChild(p);
 }
 
 fileInput.addEventListener('change', (event) => {

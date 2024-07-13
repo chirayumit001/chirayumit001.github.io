@@ -51,22 +51,34 @@ button {
     background-color: #e0e0e0;
 }
 
+.hidden {
+    display: none;
+}
+
 #loader {
-    margin-top: 20px;
     width: 100%;
-    background-color: #f3f3f3;
-    border-radius: 8px;
-    overflow: hidden;
-    height: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
 }
 
 #progressBar {
-    height: 100%;
-    width: 0%;
-    background-color: #3498db;
-    transition: width 0.4s;
+    height: 20px;
+    width: 0;
+    background-color: #4caf50;
+    border-radius: 4px;
+    transition: width 0.4s ease;
 }
 
-.hidden {
-    display: none;
+#progressPercentage {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 20px;
+    line-height: 20px;
+    color: white;
 }
