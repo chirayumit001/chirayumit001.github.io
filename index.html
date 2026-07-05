@@ -3,78 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Center</title>
+    <title>FAuto - Download Center</title>
     <style>
+        /* Modern, minimal reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f6f8fa;
-            color: #24292e;
+            background-color: #0d1117; /* Sleek dark background */
+            color: #c9d1d9;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            min-height: 100vh;
+            padding: 20px;
         }
+
         .container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #161b22; /* Slightly lighter card background */
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 1px solid #30363d;
             text-align: center;
-            max-width: 400px;
+            max-width: 480px;
             width: 100%;
         }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
+
+        /* FAuto Logo Styling */
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
         }
-        p {
-            color: #586069;
+        .logo .f-letter {
+            color: #1f6feb; /* Deep Blue */
+        }
+        .logo .auto-text {
+            color: #ffffff; /* White */
+        }
+
+        .subtitle {
+            color: #8b949e;
+            font-size: 14px;
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #58a6ff;
+            margin-bottom: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .download-group {
             margin-bottom: 30px;
         }
-        .download-btn {
+
+        /* Simple Aesthetic Buttons */
+        .btn {
             display: block;
-            background-color: #2ea44f;
-            color: white;
+            width: 100%;
+            background-color: #21262d;
+            color: #c9d1d9;
             text-decoration: none;
-            padding: 12px 20px;
-            margin: 10px 0;
+            padding: 14px;
+            margin-bottom: 12px;
             border-radius: 6px;
-            font-weight: bold;
-            transition: background-color 0.2s;
+            font-weight: 600;
+            font-size: 15px;
+            border: 1px solid #30363d;
+            transition: all 0.2s ease;
         }
-        .download-btn:hover {
-            background-color: #2c974b;
+
+        .btn:hover {
+            background-color: #30363d;
+            border-color: #8b949e;
+            color: #ffffff;
         }
-        .zip-btn {
-            background-color: #0366d6;
+
+        /* Accent button for the ZIP main file */
+        .btn-accent {
+            background-color: #1f6feb;
+            color: #ffffff;
+            border: 1px solid transparent;
         }
-        .zip-btn:hover {
-            background-color: #0056b3;
+
+        .btn-accent:hover {
+            background-color: #388bfd;
+            border-color: transparent;
+            color: #ffffff;
         }
+
         .file-info {
-            font-size: 12px;
-            color: #6a737d;
-            margin-top: -5px;
-            margin-bottom: 15px;
+            font-size: 11px;
+            color: #8b949e;
+            margin-top: -8px;
+            margin-bottom: 16px;
+            text-align: left;
+            padding-left: 2px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Download Center</h1>
-    <p>Select a file below to start your download.</p>
+    <div class="logo"><span class="f-letter">F</span><span class="auto-text">Auto</span></div>
+    <p class="subtitle">Official Release Download Portal</p>
 
-    <a href="downloads/app.apk" download="app.apk" class="download-btn">
-        Download Android APK
-    </a>
-    <div class="file-info">Format: .apk | For Android devices</div>
+    <div class="download-group">
+        <div class="section-title">Android Applications</div>
+        
+        <a href="PASTE_YOUR_2_DOC_APK_LINK_HERE" class="btn">
+            Download APK (2 Generic Docs Config)
+        </a>
+        <div class="file-info">Size: 250MB • Android App</div>
 
-    <a href="downloads/files.zip" download="files.zip" class="download-btn zip-btn">
-        Download ZIP Archive
-    </a>
-    <div class="file-info">Format: .zip | Compressed folder</div>
+        <a href="PASTE_YOUR_3_DOC_APK_LINK_HERE" class="btn">
+            Download APK (3 Generic Docs Config)
+        </a>
+        <div class="file-info">Size: 250MB • Android App</div>
+    </div>
+
+    <div class="download-group" style="margin-bottom: 0;">
+        <div class="section-title">Data Archive</div>
+        
+        <a href="PASTE_YOUR_ZIP_LINK_HERE" class="btn btn-accent">
+            Download ZIP Archive
+        </a>
+        <div class="file-info">Size: 250MB • Compressed Folder</div>
+    </div>
 </div>
 
 </body>
